@@ -17,10 +17,8 @@ let getPokemon = id => {
     .then(dataJson => {
         let {name, id, abilities, height, weight, types} = dataJson;
         let pokemonTypes = [];
-        let pokemonAbilities = [];
 
         types.forEach(type => pokemonTypes.push(type.type.name));
-        abilities.forEach(ab => pokemonAbilities.push(ab.ability.name));
 
         let pokemonName = document.createElement('div');
         pokemonName.className = 'pokemon-name';
@@ -62,15 +60,7 @@ let getPokemon = id => {
             pokemon.appendChild(pokemonType);
         })
 
-        pokemonAbilities.forEach(ab => {
-            let pokemonAb = document.createElement('div');
-            pokemonAb.className = 'pokemon-ab';
-            let pokemonAbSpan = document.createElement('span');
-            pokemonAbSpan.innerText = ab;
-
-            pokemonAb.appendChild(pokemonAbSpan);
-            pokemon.appendChild(pokemonAb);
-        })
+        pokemonSearch(pokemon);
     })
     .catch(error => console.log(error))
 
@@ -89,6 +79,17 @@ let getPokemon = id => {
         }
     })
     .catch(error => console.log(error))
+
+    const pokemonSearch = (pokemon) => {
+        search.addEventListener('keyup', () => {
+            const searchText = search.value.toString().toLowerCase();
+            if (pokemon.innerHTML.indexOf(searchText) > -1) {
+                pokemon.style.display = '';
+            } else {
+                pokemon.style.display = 'none';
+            }
+        })
+    };
 }
 
 for (let index = 1; index <= 1118; index++) {
