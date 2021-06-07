@@ -47,7 +47,7 @@ span {
     width: 100%;
     display: flex;
     flex-flow: row wrap;
-    align-items: center;
+    align-items: flex-start;
     align-content: center;
     justify-content: center;
     padding: 50px 20px 10px 20px;
@@ -70,8 +70,8 @@ span {
 }
 
 .pokemon__sprite {
-    max-width: 110px;
-    max-height: 110px;
+    width: 110px;
+    height: 110px;
     margin-bottom: 6px;
     padding: 5px;
     background-color: rgb(255, 255, 255);
@@ -113,8 +113,41 @@ span {
     color: rgb(255, 255, 255);
 }
 
-.pokemon__ab, .pokemon__height, .pokemon__weight, .pokemon__types {
+.pokemon__height,
+.pokemon__weight,
+.pokemon__types {
     display: none;
+}
+
+.pokemon.active {
+    height: auto;
+}
+
+.pokemon.active .pokemon__height,
+.pokemon.active .pokemon__weight,
+.pokemon.active .pokemon__types {
+    display: block;
+}
+
+.pokemon.active .pokemon__height span,
+.pokemon.active .pokemon__weight span,
+.pokemon.active .pokemon__types span {
+    display: inline-block;
+    margin-bottom: 3px;
+}
+
+
+.pokemon.active .pokemon__types span {
+    margin-right: 5px;
+    background-color: rgb(190, 190, 190);
+    color: rgb(255, 255, 255);
+    border-radius: 50%;
+    padding: 5px;
+}
+
+
+.pokemon.active .pokemon__types span:last-child {
+    margin-right: 0;
 }
 
 @media (max-width: 1025px) {

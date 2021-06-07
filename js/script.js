@@ -10,12 +10,12 @@ const getPokemon = async (id) => {
     const pokemonDataRes = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
     const pokemonData = await pokemonDataRes.json();
 
-    const {sprites, name, id: pokeId, abilities, height, weight, types} = pokemonData;
+    const {sprites, name, id: pokeId, height, weight, types} = pokemonData;
 
-    createPokemon(sprites, name, pokeId, abilities, height, weight, types);
+    createPokemon(sprites, name, pokeId, height, weight, types);
 }
 
-const createPokemon = (sprites, name, id, abilities, height, weight, types) => {
+const createPokemon = (sprites, name, id, height, weight, types) => {
     const elements = `
     <div class="pokemon__sprite">
     <img src=${sprites.front_default} alt="pokemon sprite" />
@@ -32,8 +32,7 @@ const createPokemon = (sprites, name, id, abilities, height, weight, types) => {
     <div class="pokemon__weight">
     <span>Weight: ${weight / 10}kg</span>
     </div>
-    <div class="pokemon__types">${types.map(type => `<span>${type.type.name}<span>`).join('')}</div>
-    <div class="pokemon__ab">${abilities.map(ab => `<span>${ab.ability.name}<span>`).join('')}</div>
+    <div class="pokemon__types">${types.map(type => `<span>${type.type.name}</span>`).join('')}</div>
     `
 
     const pokemon = document.createElement('div');
@@ -43,17 +42,24 @@ const createPokemon = (sprites, name, id, abilities, height, weight, types) => {
     mainContainer.appendChild(pokemon);
 
     pokemonSearch(pokemon);
+    showInfo(pokemon);
 }
 
 const pokemonSearch = (pokemon) => {
     search.addEventListener('keyup', () => {
         const searchText = search.value.toString().toLowerCase();
-        if (pokemon.innerHTML.indexOf(searchText) > -1) {
+        if (pokemon.children[1].innerHTML.indexOf(searchText) > -1) {
             pokemon.style.display = '';
         } else {
             pokemon.style.display = 'none';
         }
     })
 };
+
+const showInfo = (pokemon) => {
+    pokemon.addEventListener('click', () => {
+        pokemon.classList.toggle('active');
+    })
+}
 
 fetchPokemons();
